@@ -19,11 +19,12 @@ class Car:
         self.travelled_dis += self.current_speed * hours
 
     def __str__(self):
-     return (
+        return (
         f"{self.regis_num:>8} | "
         f"{self.max_speed:>9} | "
         f"{self.current_speed:>13} | "
-        f"{self.travelled_dis:>15}"  )
+        f"{self.travelled_dis:>15}"  
+     )
 
     print("task 1:")
     demo_car = Car("ABC123", 142) # type: ignore
@@ -47,5 +48,10 @@ class Car:
     print()
 
     print("task 3:")
+    demo_car.accelerate(88)
+    demo_car.drive(1.5)
+    print(f"After 1.5 hours at 88 km/h → distance = {demo_car.travelled_dis:.1f} km")
+    print(demo_car)
+    print("═" * 70)
         
         
