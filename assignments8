@@ -21,3 +21,16 @@ class Elevator:
             self.floor_up()
         while self.current_floor > target:
             self.floor_down()
+class Building:
+    def __init__(self, bottom, top, num_elevators):
+        self.bottom = bottom
+        self.top = top
+        self.elevators = []
+
+        for i in range(num_elevators):
+            self.elevators.append(Elevator(bottom, top))
+
+    def run_elevator(self, number, target_floor):
+        self.elevators[number].go_to_floor(target_floor)
+
+
