@@ -33,4 +33,7 @@ class Building:
     def run_elevator(self, number, target_floor):
         self.elevators[number].go_to_floor(target_floor)
 
-
+    def fire_alarm(self):
+        print("FIRE ALARM! All elevators going to bottom floor.")
+        for elevator in self.elevators:
+            elevator.go_to_floor(self.bottom)
