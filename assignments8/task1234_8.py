@@ -1,5 +1,6 @@
 import random
 
+#elevator task 123
 class Elevator:
     def __init__(self, bottom, top):
         self.bottom = bottom
@@ -40,7 +41,7 @@ class Building:
 
 
 
-#race car
+#race car task 4
 
 
 
