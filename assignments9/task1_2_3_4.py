@@ -54,9 +54,9 @@ def calculate_average_score(filename: str) -> float:
             for line_num, line in enumerate(f, 1):
                 line = line.strip()
                 if not line:
-                    continue  # skip blank lines
+                    continue  # skip 
                 
-                parts = line.split(',', 1)  # split only on first comma
+                parts = line.split(',', 1)  # split on comma
                 if len(parts) != 2:
                     print(f"Warning: Skipping invalid line {line_num}: {line}")
                     continue
