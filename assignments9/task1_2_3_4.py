@@ -16,3 +16,23 @@ def count_non_blank_lines(filename: str) -> int:
     except Exception as e:
         print(f"Error reading file: {e}")
         return 0
+    
+    def find_keyword_lines(filename: str, keyword: str, case_sensitive: bool = True) -> list[int]:
+        """
+        Returns a list of 1-based line numbers where the keyword appears.
+        """
+    results = []
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            for line_num, line in enumerate(f, 1):
+                search_line = line if case_sensitive else line.lower()
+                search_keyword = keyword if case_sensitive else keyword.lower()
+                if search_keyword in search_line:
+                    results.append(line_num)
+        return results
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+        return []
+    except Exception as e:
+        print(f"Error: {e}")
+        return []
