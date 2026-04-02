@@ -7,7 +7,7 @@ def count_non_blank_lines(filename: str) -> int:
         with open(filename, 'r', encoding='utf-8') as f:
             count = 0
             for line in f:
-                if line.strip():  # Removes leading/trailing whitespace and checks if anything remains
+                if line.strip():  
                     count += 1
             return count
     except FileNotFoundError:
