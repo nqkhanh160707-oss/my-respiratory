@@ -3,8 +3,7 @@ from fileinput import filename
 
 def count_non_blank_lines(filename: str) -> int:
     """
-    Opens a text file and returns the number of non-blank lines.
-    Blank lines (only whitespace) are ignored.
+    Counts the number of non-blank lines in a file.
     """
     try:
         with open(filename, 'r', encoding='utf-8') as f:
@@ -22,9 +21,7 @@ def count_non_blank_lines(filename: str) -> int:
 
 
 def find_keyword_lines(filename: str, keyword: str, case_sensitive: bool = True) -> list[int]:
-    """
-    Returns a list of 1-based line numbers where the keyword appears.
-    """
+
     results = []
     try:
         with open(filename, 'r', encoding='utf-8') as f:
@@ -44,8 +41,7 @@ def find_keyword_lines(filename: str, keyword: str, case_sensitive: bool = True)
 
 def calculate_average_score(filename: str) -> float:
     """
-    Reads a file where each line is "Name,Score" and returns the average score.
-    Ignores invalid lines gracefully.
+    Calculated scores
     """
     total = 0.0
     count = 0
