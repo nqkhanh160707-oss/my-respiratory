@@ -3,7 +3,7 @@ from fileinput import filename
 
 def count_non_blank_lines(filename: str) -> int:
     """
-    Counts the number of non-blank lines in a file.
+    Counts the number of non-blank lines in a file
     """
     try:
         with open(filename, 'r', encoding='utf-8') as f:
