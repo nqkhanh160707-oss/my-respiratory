@@ -16,4 +16,4 @@ def get_chuck_norris_joke():
 
 if __name__ == "__main__":
     get_chuck_norris_joke()
-    #i dont have PIP installed but i think you can run it
+    #i dont have PIP installed but i think you can still run it
