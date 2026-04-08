@@ -1,38 +1,50 @@
-import requests
+import http.server
+import socketserver
+import json
+import math
+from urllib.parse import urlparse
 
-def get_weather(city_name, api_key):
-    base_url = "https://api.openweathermap.org/data/2.5/weather"
-    params = {
-        "q": city_name,
-        "appid": api_key,
-        "units": "metric"   # Returns temp in Celsius + other metric units
-    }
-    try:
-        response = requests.get(base_url, params=params, timeout=10)
-        response.raise_for_status()
-        data = response.json()
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
-        # Extract required fields
-        description = data["weather"][0]["description"]
-        temp_celsius = data["main"]["temp"]
-
-        print(f"Weather condition: {description}")
-        print(f"Temperature: {temp_celsius} °C")
-
-    except requests.exceptions.HTTPError as e:
-        if response.status_code == 404:
-            print(f"City '{city_name}' not found. Please check the spelling or try adding country code (e.g., Hanoi,VN).")
+class PrimeHandler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        parsed = urlparse(self.path)
+        if parsed.path.startswith("/prime_number/"):
+            try:
+                number_str = parsed.path.split("/prime_number/")[1]
+                number = int(number_str)
+                result = {
+                    "Number": number,
+                    "isPrime": is_prime(number)
+                }
+                self.send_response(200)
+                self.send_header("Content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps(result).encode("utf-8"))
+            except ValueError:
+                self.send_response(400)
+                self.end_headers()
+                self.wfile.write(b'{"error": "Invalid number"}')
         else:
-            print("Error fetching weather data.")
-    except requests.exceptions.RequestException:
-        print("Network error. Please check your internet connection.")
-    except (KeyError, IndexError):
-        print("Unexpected data format from API.")
+            self.send_response(404)
+            self.end_headers()
+            self.wfile.write(b'{"error": "Not found"}')
 
 if __name__ == "__main__":
-    api_key = "YOUR_API_KEY_HERE"  # ← Replace with your OpenWeatherMap API key
-    city = input("Enter the name of the municipality: ").strip()
-    if city:
-        get_weather(city, api_key)
-    else:
-        print("Please enter a valid city name.")
+    PORT = 5000
+    with socketserver.TCPServer(("", PORT), PrimeHandler) as httpd:
+        print(f"Prime checker server running on http://127.0.0.1:{PORT}")
+        print("Example: http://127.0.0.1:5000/prime_number/31")
+        httpd.serve_forever()
