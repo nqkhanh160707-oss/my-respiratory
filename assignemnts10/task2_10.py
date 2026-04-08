@@ -16,7 +16,7 @@ def get_weather_description(code):
     return descriptions.get(code, f"Unknown weather code ({code})")
 
 def get_weather(city_name):
-    # First, get coordinates for the city (geocoding)
+    
     geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city_name}&count=1&language=en&format=json"
     try:
         with urllib.request.urlopen(geo_url, timeout=10) as resp:
@@ -32,7 +32,6 @@ def get_weather(city_name):
         city = result.get("name", city_name)
         country = result.get("country_code", "")
 
-        # Now get current weather
         weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,weather_code&timezone=auto"
         with urllib.request.urlopen(weather_url, timeout=10) as resp:
             weather_data = json.loads(resp.read().decode("utf-8"))
